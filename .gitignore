@@ -4,3 +4,5 @@
 node_modules
 /.shadow-cljs
 /package-lock.json
+/.cpcache
+/.nrepl-port

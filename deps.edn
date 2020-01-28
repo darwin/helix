@@ -1,2 +1,10 @@
-{:paths ["src"]
- :deps {cljs-bean {:mvn/version "1.5.0"}}}
+{:paths ["src" "dev"]
+ :deps  {devcards                    {:mvn/version "0.2.5"}
+         cljs-bean                   {:git/url "https://github.com/mfikes/cljs-bean.git"
+                                      :sha     "3ccb2cf75f0e0a28e2a1af904075c87bfdea78fb"}
+         pjstadig/humane-test-output {:mvn/version "0.9.0"}
+
+         thheller/shadow-cljs        {:mvn/version "RELEASE"}
+         binaryage/devtools          {:mvn/version "RELEASE"}
+
+         }}

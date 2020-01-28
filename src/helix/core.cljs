@@ -2,6 +2,7 @@
   (:refer-clojure :exclude [type])
   (:require [goog.object :as gobj]
             [helix.impl.props :as impl.props]
+            [helix.impl.props2 :as impl.props2]
             ["./impl/class.js" :as helix.class]
             [cljs-bean.core :as bean]
             ["react" :as react])
@@ -120,11 +121,7 @@
 
 (defn extract-cljs-props
   [o]
-  (when (and ^boolean goog/DEBUG (or (map? o) (nil? o)))
-    (throw (ex-info "Props received were a map. This probably means you're calling your component as a function." {:props o})))
-  (if-let [props (gobj/get o "helix/props")]
-    (assoc props :children (gobj/get o "children"))
-    (bean/bean o)))
+  (impl.props2/props-bean o))
 
 
 (defn memo

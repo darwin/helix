@@ -1,5 +1,6 @@
 (ns helix.impl.props
   (:require [clojure.string :as string]
+            #?(:clj [helix.impl.props2])
             #?@(:cljs [[cljs-bean.core :as b]
                        [goog.object :as gobj]]))
   #?(:cljs (:require-macros [helix.impl.props])))
@@ -104,8 +105,11 @@
   (-native-props {:asdf "jkl" :style 'foo})
   )
 
+;(defmacro native-props [m]
+;  (-native-props m))
+
 (defmacro native-props [m]
-  (-native-props m))
+  `(helix.impl.props2/translate-props ~m))
 
 
 (defn -props
