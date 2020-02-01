@@ -144,10 +144,15 @@
          ~js-map)
       js-map)))
 
+(defn extract-spread-special [m]
+  (if-some [amp (m '&)]
+    [amp (dissoc m '&)]
+    (if-some [amp (m :&)]
+      [amp (dissoc m :&)])))
+
 (defn gen-translate-props-map [m]
-  (if-some [spread-sym (m '&)]
-    (let [clean-m (dissoc m '&)]
-      `(js/Object.assign ~(gen-translate-clean-props-map clean-m) (dynamic-translate-props ~spread-sym)))
+  (if-some [[spread-sym clean-m] (extract-spread-special m)]
+    `(js/Object.assign ~(gen-translate-clean-props-map clean-m) (dynamic-translate-props ~spread-sym))
     (gen-translate-clean-props-map m)))
 
 (defn gen-translate-props [v]
@@ -176,6 +181,9 @@
 
   (pprint (macroexpand '(translate-props {:name "value"})))
 
+  (pprint (macroexpand '(translate-props {:name "value" & rest})))
+  (pprint (macroexpand '(translate-props {:name "value" :& rest})))
+
   (pprint (macroexpand '(translate-props {:name               "value"
                                           :kebab-name         "kebab-value"
                                           :regex-value        #"a regex"
@@ -199,8 +207,8 @@
                                                   :nested-map       {:nested-key "nested-val"}}})))
 
   (pprint (macroexpand '(translate-props (merge spring {:key           index
-                                                                             :castShadow    true
-                                                                             :receiveShadow true}))))
+                                                        :castShadow    true
+                                                        :receiveShadow true}))))
 
   )
 
