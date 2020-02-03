@@ -8,6 +8,7 @@
             ["react" :as react])
   (:require-macros [helix.core]))
 
+(def ^:dynamic *display-name-hook* identity)
 
 (when (exists? js/Symbol)
   (extend-protocol IPrintWithWriter

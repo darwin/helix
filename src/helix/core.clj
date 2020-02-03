@@ -162,7 +162,7 @@
                                          body))
                (cond->
                  (true? ^boolean goog/DEBUG)
-                 (doto (goog.object/set "displayName" ~fully-qualified-name)))
+                 (doto (goog.object/set "displayName" (*display-name-hook* ~fully-qualified-name))))
                ~@(-> opts :wrap)))
 
          ~(when flag-define-factory?
